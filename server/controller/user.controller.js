@@ -71,7 +71,18 @@ const loginUser = async (req, res) => {
 };
 
 
+const currentUser = async (req, res) => {
+    try {
+        userId = req.user;
+        const user = await User.findById(userId).select("-password");
+
+        res.status(200).send(user);
+
+    } catch (err) {
+        res.status(500).send("Internal Server Isues");
+    }
+};
 
 
 
-module.exports = { signupUser, loginUser };
+module.exports = { signupUser, loginUser, currentUser };
